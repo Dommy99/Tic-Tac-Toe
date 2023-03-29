@@ -23,3 +23,53 @@
 // append the data to the score board
 
 // extra save the wins to local store 
+
+let currentPlayer = 1;
+
+function newGame() {
+    const blocks = document.querySelectorAll('.block');
+  blocks.forEach((block) => {
+    // Clear the background color of each block
+    block.style.backgroundColor = '';
+  });
+
+  // Reset the current player
+  currentPlayer = 1;
+}
+
+function handleClick(event) {
+  // Handle the click event here
+  const block = event.target;
+  
+  if (block.style.backgroundColor) {
+    // Skip if the block is already colored
+    return;
+  }
+  
+  const playerOneColor = getComputedStyle(document.documentElement).getPropertyValue('--playerOne').trim();
+  const playerTwoColor = getComputedStyle(document.documentElement).getPropertyValue('--playerTwo').trim();
+
+  if (currentPlayer === 1) {
+    block.style.backgroundColor = playerOneColor;
+    currentPlayer = 2;
+  } else {
+    block.style.backgroundColor = playerTwoColor;
+    currentPlayer = 1;
+  }
+//   game logic
+}
+  
+  // Add click event listeners to each block
+  document.getElementById('block1').addEventListener('click', handleClick);
+  document.getElementById('block2').addEventListener('click', handleClick);
+  document.getElementById('block3').addEventListener('click', handleClick);
+  document.getElementById('block4').addEventListener('click', handleClick);
+  document.getElementById('block5').addEventListener('click', handleClick);
+  document.getElementById('block6').addEventListener('click', handleClick);
+  document.getElementById('block7').addEventListener('click', handleClick);
+  document.getElementById('block8').addEventListener('click', handleClick);
+  document.getElementById('block9').addEventListener('click', handleClick);
+
+  // new game button
+  document.querySelector('.new-game-button').addEventListener('click', newGame);
+  
