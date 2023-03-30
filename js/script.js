@@ -24,31 +24,75 @@
 
 // extra save the wins to local store 
 
+// Declare the current player variable, with 1 representing Player 1
 let currentPlayer = 1;
 
+// Function to start a new game
 function newGame() {
-    const blocks = document.querySelectorAll('.block');
+  // Select all block elements and store them in a constant
+  const blocks = document.querySelectorAll('.block');
+  
+  // Iterate over each block element
   blocks.forEach((block) => {
     // Clear the background color of each block
     block.style.backgroundColor = '';
   });
 
-  // Reset the current player
+  // Reset the current player to Player 1
   currentPlayer = 1;
 }
 
-function handleClick(event) {
-  // Handle the click event here
-  const block = event.target;
+// Function to check for a win
+function checkWin() {
+  // Select all block elements and store them in a constant
+  const blocks = document.querySelectorAll('.block');
   
+  // Define the possible winning combinations for a 3x3 tic-tac-toe board
+  const winningCombinations = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6]
+  ];
+
+  // Iterate over each winning combination
+  for (const combination of winningCombinations) {
+    // Extract the three indices (a, b, and c) from the current winning combination
+    const [a, b, c] = combination;
+    console.log(a);//a = to all the first points in the winning combination array
+    
+    // Check if the current winning combination is present on the board
+    if (
+      blocks[a].style.backgroundColor &&
+      blocks[a].style.backgroundColor === blocks[b].style.backgroundColor &&
+      blocks[a].style.backgroundColor === blocks[c].style.backgroundColor
+    ) {
+      return true; // winning combination 
+    }
+  }
+
+  return false; // no winning combination
+}
+
+// Function to handle the click event on a block
+function handleClick(event) {
+  // Get the block element that was clicked
+  const block = event.target;
+
+  // If the clicked block already has a background color, skip it
   if (block.style.backgroundColor) {
-    // Skip if the block is already colored
     return;
   }
-  
+
+  // Get the background colors for Player 1 and Player 2 from the CSS custom properties
   const playerOneColor = getComputedStyle(document.documentElement).getPropertyValue('--playerOne').trim();
   const playerTwoColor = getComputedStyle(document.documentElement).getPropertyValue('--playerTwo').trim();
 
+  // Set the background color of the clicked block based on the current player and switch to the other player
   if (currentPlayer === 1) {
     block.style.backgroundColor = playerOneColor;
     currentPlayer = 2;
@@ -56,20 +100,23 @@ function handleClick(event) {
     block.style.backgroundColor = playerTwoColor;
     currentPlayer = 1;
   }
-//   game logic
-}
-  
-  // Add click event listeners to each block
-  document.getElementById('block1').addEventListener('click', handleClick);
-  document.getElementById('block2').addEventListener('click', handleClick);
-  document.getElementById('block3').addEventListener('click', handleClick);
-  document.getElementById('block4').addEventListener('click', handleClick);
-  document.getElementById('block5').addEventListener('click', handleClick);
-  document.getElementById('block6').addEventListener('click', handleClick);
-  document.getElementById('block7').addEventListener('click', handleClick);
-  document.getElementById('block8').addEventListener('click', handleClick);
-  document.getElementById('block9').addEventListener('click', handleClick);
 
-  // new game button
-  document.querySelector('.new-game-button').addEventListener('click', newGame);
-  
+  // Check if there's a win and, if so, show an alert and start a new game
+  if (checkWin()) {
+    if (currentPlayer === 1) {
+        alert('Player 2 wins!');
+      } else {
+        alert('Player 1 wins!');
+      }
+      
+    newGame();
+  }
+}
+
+// Add click event listeners to each block
+document.querySelectorAll('.block').forEach((block) => {
+  block.addEventListener('click', handleClick);
+});
+
+// Add a click event listener to the New Game button
+document.querySelector('.new-game-button').addEventListener('click', newGame);
