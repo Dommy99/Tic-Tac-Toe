@@ -22,7 +22,7 @@
 // save the data of who won
 // append the data to the score board
 
-// extra save the wins to local store 
+// extra save the wins to local store
 
 // Declare the current player variable, with 1 representing Player 1
 let currentPlayer = 1;
@@ -30,12 +30,12 @@ let currentPlayer = 1;
 // Function to start a new game
 function newGame() {
   // Select all block elements and store them in a constant
-  const blocks = document.querySelectorAll('.block');
-  
+  const blocks = document.querySelectorAll(".block");
+
   // Iterate over each block element
   blocks.forEach((block) => {
     // Clear the background color of each block
-    block.style.backgroundColor = '';
+    block.style.backgroundColor = "";
   });
 
   // Reset the current player to Player 1
@@ -44,39 +44,51 @@ function newGame() {
 
 // Function to check for a win
 function checkWin() {
-  // Select all block elements and store them in a constant
-  const blocks = document.querySelectorAll('.block');
+    // Select all block elements and store them in a constant
+    const blocks = document.querySelectorAll(".block");
   
-  // Define the possible winning combinations for a 3x3 tic-tac-toe board
-  const winningCombinations = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6]
-  ];
-
-  // Iterate over each winning combination
-  for (const combination of winningCombinations) {
-    // Extract the three indices (a, b, and c) from the current winning combination
-    const [a, b, c] = combination;
-    console.log(a);//a = to all the first points in the winning combination array
-    
-    // Check if the current winning combination is present on the board
-    if (
-      blocks[a].style.backgroundColor &&
-      blocks[a].style.backgroundColor === blocks[b].style.backgroundColor &&
-      blocks[a].style.backgroundColor === blocks[c].style.backgroundColor
-    ) {
-      return true; // winning combination 
+    // Define the possible winning combinations for a 3x3 tic-tac-toe board
+    const winningCombinations = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6],
+    ];
+  
+    let clickedBlocks = 0;
+  
+    // Iterate over each winning combination
+    for (const combination of winningCombinations) {
+      // Extract the three indices (a, b, and c) from the current winning combination
+      const [a, b, c] = combination;
+  
+      // Check if the current winning combination is present on the board
+      if (
+        blocks[a].style.backgroundColor &&
+        blocks[a].style.backgroundColor === blocks[b].style.backgroundColor &&
+        blocks[a].style.backgroundColor === blocks[c].style.backgroundColor
+      ) {
+        return true; // winning combination
+      }
     }
-  }
-
-  return false; // no winning combination
-}
+  
+    blocks.forEach((block) => {
+      if (block.style.backgroundColor) {
+        clickedBlocks++;
+      }
+    });
+  
+    if (clickedBlocks === blocks.length) {
+        alert("tie");; 
+    }
+  
+    return false; // no winning combination or tie
+  }   
+  
 
 // Function to handle the click event on a block
 function handleClick(event) {
@@ -89,8 +101,12 @@ function handleClick(event) {
   }
 
   // Get the background colors for Player 1 and Player 2 from the CSS custom properties
-  const playerOneColor = getComputedStyle(document.documentElement).getPropertyValue('--playerOne').trim();
-  const playerTwoColor = getComputedStyle(document.documentElement).getPropertyValue('--playerTwo').trim();
+  const playerOneColor = getComputedStyle(document.documentElement)
+    .getPropertyValue("--playerOne")
+    .trim();
+  const playerTwoColor = getComputedStyle(document.documentElement)
+    .getPropertyValue("--playerTwo")
+    .trim();
 
   // Set the background color of the clicked block based on the current player and switch to the other player
   if (currentPlayer === 1) {
@@ -104,19 +120,23 @@ function handleClick(event) {
   // Check if there's a win and, if so, show an alert and start a new game
   if (checkWin()) {
     if (currentPlayer === 1) {
-        alert('Player 2 wins!');
-      } else {
-        alert('Player 1 wins!');
-      }
-      
+      alert("Player 2 wins!");
+    } else {
+      alert("Player 1 wins!");
+    }
+
     newGame();
   }
 }
 
 // Add click event listeners to each block
-document.querySelectorAll('.block').forEach((block) => {
-  block.addEventListener('click', handleClick);
+document.querySelectorAll(".block").forEach((block) => {
+  block.addEventListener("click", handleClick);
 });
 
 // Add a click event listener to the New Game button
-document.querySelector('.new-game-button').addEventListener('click', newGame);
+document.querySelector(".new-game-button").addEventListener("click", newGame);
+
+
+// add a delay 
+//  If i cant find 3 in a row for each player the its a tie
