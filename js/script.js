@@ -34,8 +34,20 @@ const playerTwoWinModal = document.querySelector(
 );
 const tieModal = document.querySelector(".modal-content .tie");
 
+//player color box
 const playerOneIndicator = document.querySelector(".player-one");
 const playerTwoIndicator = document.querySelector(".player-two");
+
+// Retrieve data from localStorage
+const storedPlayerOneWins = parseInt(localStorage.getItem("player1Wins")) || 0;// if the local storage is null set to zero
+const storedPlayerTwoWins = parseInt(localStorage.getItem("player2Wins")) || 0;
+const storedTies = parseInt(localStorage.getItem("tie")) || 0;
+
+// Update the text content of the elements
+document.querySelector(".player-one-wins").textContent = `Player 1 Win(s):${storedPlayerOneWins}`;
+document.querySelector(".player-two-wins").textContent = `Player 2 Win(s):${storedPlayerTwoWins}`;
+document.querySelector(".tie").textContent = `Tie:${storedTies}`;
+
 
 // Declare the current player variable, with 1 representing Player 1
 let currentPlayer = 1;
@@ -164,12 +176,14 @@ function handleClick(event) {
       currentPlayer = 2;
       playerTwoWin++;
       modal.style.display = "block";
+    //   const player2 = parseInt(localStorage.getItem('player2Wins')) ;
       playerTwoWinModal.textContent = `Player 2 Win(s):${playerTwoWin}`;
       statusModal.textContent = 'Player 2 Wins!'; 
 
-      localStorage.setItem('currentplayer',currentPlayer);
-      localStorage.setItem('player2Wins',playerTwoWin);
-    //   const player2 = localStorage.getItem(playerTwoWin);
+    //   localStorage.setItem('currentplayer',currentPlayer);
+    //   localStorage.setItem('player2Wins',playerTwoWin);
+      
+    //   console.log(typeof(playerTwoWin + player2));
       
     } else {
       playerTwoIndicator.classList.remove("player-two");
