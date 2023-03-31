@@ -33,6 +33,9 @@ const playerTwoWinModal = document.querySelector(
 );
 const tieModal = document.querySelector(".modal-content .tie");
 
+const playerOneIndicator = document.querySelector(".player-one");
+const playerTwoIndicator = document.querySelector(".player-two");
+
 // Declare the current player variable, with 1 representing Player 1
 let currentPlayer = 1;
 let playerOneWin = 0;
@@ -43,6 +46,9 @@ let tie = 0;
 function newGame() {
   // Select all block elements and store them in a constant
   const blocks = document.querySelectorAll(".block");
+  //resets the player color box
+  playerTwoIndicator.classList.add("player-two");
+  playerOneIndicator.classList.add("player-one");
 
   // Iterate over each block element
   blocks.forEach((block) => {
@@ -99,8 +105,8 @@ function checkWin() {
     modal.style.display = "block";
     tieModal.textContent = `Tie:${tie}`;
     setTimeout(function () {
-        newGame();
-      }, 2000);
+      newGame();
+    }, 2000);
   }
 
   return false; // no winning combination or tie
@@ -128,23 +134,35 @@ function handleClick(event) {
   if (currentPlayer === 1) {
     block.style.backgroundColor = playerOneColor;
     currentPlayer = 2;
+    playerOneIndicator.classList.remove("player-one");
+    playerTwoIndicator.classList.add("player-two");
   } else {
     block.style.backgroundColor = playerTwoColor;
     currentPlayer = 1;
+    playerTwoIndicator.classList.remove("player-two");
+    playerOneIndicator.classList.add("player-one");
   }
+  
 
   // Check if there's a win and, if so, show an alert and start a new game
   if (checkWin()) {
     if (currentPlayer === 1) {
+        playerTwoIndicator.classList.add("player-two");
+        playerOneIndicator.classList.remove("player-one");
+        currentPlayer = 2;
       playerTwoWin++;
       modal.style.display = "block";
       playerTwoWinModal.textContent = `Player 2 Win(s):${playerTwoWin}`;
+
     } else {
+        playerTwoIndicator.classList.remove("player-two");
+        playerOneIndicator.classList.add("player-one");
+        currentPlayer = 1;
       playerOneWin++;
       modal.style.display = "block";
       playerOneWinModal.textContent = `Player 1 Win(s):${playerOneWin}`;
-    }
 
+    }
     // allows the final box to show the color before the new game starts
     setTimeout(function () {
       newGame();
