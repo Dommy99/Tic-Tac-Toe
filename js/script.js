@@ -25,9 +25,13 @@
 // extra save the wins to local store
 
 // textcontent for the modal
-const playerOneWinModal = document.querySelector(".modal-content .player-one-wins")
-const playerTwoWinModal = document.querySelector(".modal-content .player-two-wins")
-const tieModal = document.querySelector(".modal-content .tie")
+const playerOneWinModal = document.querySelector(
+  ".modal-content .player-one-wins"
+);
+const playerTwoWinModal = document.querySelector(
+  ".modal-content .player-two-wins"
+);
+const tieModal = document.querySelector(".modal-content .tie");
 
 // Declare the current player variable, with 1 representing Player 1
 let currentPlayer = 1;
@@ -52,53 +56,55 @@ function newGame() {
 
 // Function to check for a win
 function checkWin() {
-    // Select all block elements and store them in a constant
-    const blocks = document.querySelectorAll(".block");
-  
-    // Define the possible winning combinations for a 3x3 tic-tac-toe board
-    const winningCombinations = [
-      [0, 1, 2],
-      [3, 4, 5],
-      [6, 7, 8],
-      [0, 3, 6],
-      [1, 4, 7],
-      [2, 5, 8],
-      [0, 4, 8],
-      [2, 4, 6],
-    ];
-  
-    let clickedBlocks = 0;
-  
-    // Iterate over each winning combination
-    for (const combination of winningCombinations) {
-      // Extract the three indices (a, b, and c) from the current winning combination
-      const [a, b, c] = combination;
-  
-      // Check if the current winning combination is present on the board
-      if (
-        blocks[a].style.backgroundColor &&
-        blocks[a].style.backgroundColor === blocks[b].style.backgroundColor &&
-        blocks[a].style.backgroundColor === blocks[c].style.backgroundColor
-      ) {
-        return true; // winning combination
-      }
+  // Select all block elements and store them in a constant
+  const blocks = document.querySelectorAll(".block");
+
+  // Define the possible winning combinations for a 3x3 tic-tac-toe board
+  const winningCombinations = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+  ];
+
+  let clickedBlocks = 0;
+
+  // Iterate over each winning combination
+  for (const combination of winningCombinations) {
+    // Extract the three indices (a, b, and c) from the current winning combination
+    const [a, b, c] = combination;
+
+    // Check if the current winning combination is present on the board
+    if (
+      blocks[a].style.backgroundColor &&
+      blocks[a].style.backgroundColor === blocks[b].style.backgroundColor &&
+      blocks[a].style.backgroundColor === blocks[c].style.backgroundColor
+    ) {
+      return true; // winning combination
     }
-  
-    blocks.forEach((block) => {
-      if (block.style.backgroundColor) {
-        clickedBlocks++;
-      }
-    });
-  
-    if (clickedBlocks === blocks.length) {
-        alert("tie"); 
-        tie++;
-        tieModal.textContent = `Tie:${tie}`
+  }
+
+  blocks.forEach((block) => {
+    if (block.style.backgroundColor) {
+      clickedBlocks++;
     }
-  
-    return false; // no winning combination or tie
-  }   
-  
+  });
+
+  if (clickedBlocks === blocks.length) {
+    tie++;
+    modal.style.display = "block";
+    tieModal.textContent = `Tie:${tie}`;
+    setTimeout(function () {
+        newGame();
+      }, 2000);
+  }
+
+  return false; // no winning combination or tie
+}
 
 // Function to handle the click event on a block
 function handleClick(event) {
@@ -126,27 +132,25 @@ function handleClick(event) {
     block.style.backgroundColor = playerTwoColor;
     currentPlayer = 1;
   }
-  
+
   // Check if there's a win and, if so, show an alert and start a new game
   if (checkWin()) {
     if (currentPlayer === 1) {
-      alert("Player 2 wins!");
       playerTwoWin++;
-      playerTwoWinModal.textContent = `Player 2 Win(s):${playerTwoWin}`
+      modal.style.display = "block";
+      playerTwoWinModal.textContent = `Player 2 Win(s):${playerTwoWin}`;
     } else {
-      alert("Player 1 wins!");
       playerOneWin++;
-      playerOneWinModal.textContent = `Player 1 Win(s):${playerOneWin}`
+      modal.style.display = "block";
+      playerOneWinModal.textContent = `Player 1 Win(s):${playerOneWin}`;
     }
-    
+
     // allows the final box to show the color before the new game starts
-    setTimeout(function() {
-        newGame();
-      }, 2000);
+    setTimeout(function () {
+      newGame();
+    }, 2000);
   }
 }
-
-
 
 // Add click event listeners to each block
 document.querySelectorAll(".block").forEach((block) => {
@@ -165,22 +169,21 @@ let btn = document.getElementById("myBtn");
 let span = document.getElementsByClassName("close")[0];
 
 // When the user clicks on the button, open the modal
-btn.onclick = function() {
+btn.onclick = function () {
   modal.style.display = "block";
-}
+};
 
 // When the user clicks on <span> (x), close the modal
-span.onclick = function() {
+span.onclick = function () {
   modal.style.display = "none";
-}
+};
 
 // When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
+window.onclick = function (event) {
   if (event.target == modal) {
     modal.style.display = "none";
   }
-}
+};
 
-
-// add a delay 
+// add a delay
 //  If i cant find 3 in a row for each player the its a tie
