@@ -24,8 +24,16 @@
 
 // extra save the wins to local store
 
+// textcontent for the modal
+const playerOneWinModal = document.querySelector(".modal-content .player-one-wins")
+const playerTwoWinModal = document.querySelector(".modal-content .player-two-wins")
+const tieModal = document.querySelector(".modal-content .tie")
+
 // Declare the current player variable, with 1 representing Player 1
 let currentPlayer = 1;
+let playerOneWin = 0;
+let playerTwoWin = 0;
+let tie = 0;
 
 // Function to start a new game
 function newGame() {
@@ -83,7 +91,9 @@ function checkWin() {
     });
   
     if (clickedBlocks === blocks.length) {
-        alert("tie");; 
+        alert("tie"); 
+        tie++;
+        tieModal.textContent = `Tie:${tie}`
     }
   
     return false; // no winning combination or tie
@@ -116,26 +126,60 @@ function handleClick(event) {
     block.style.backgroundColor = playerTwoColor;
     currentPlayer = 1;
   }
-
+  
   // Check if there's a win and, if so, show an alert and start a new game
   if (checkWin()) {
     if (currentPlayer === 1) {
       alert("Player 2 wins!");
+      playerTwoWin++;
+      playerTwoWinModal.textContent = `Player 2 Win(s):${playerTwoWin}`
     } else {
       alert("Player 1 wins!");
+      playerOneWin++;
+      playerOneWinModal.textContent = `Player 1 Win(s):${playerOneWin}`
     }
-
-    newGame();
+    
+    // allows the final box to show the color before the new game starts
+    setTimeout(function() {
+        newGame();
+      }, 2000);
   }
 }
+
+
 
 // Add click event listeners to each block
 document.querySelectorAll(".block").forEach((block) => {
   block.addEventListener("click", handleClick);
 });
 
-// Add a click event listener to the New Game button
+// https://www.w3schools.com/howto/howto_css_modals.asp
 document.querySelector(".new-game-button").addEventListener("click", newGame);
+
+let modal = document.getElementById("myModal");
+
+// Get the button that opens the modal
+let btn = document.getElementById("myBtn");
+
+// Get the <span> element that closes the modal
+let span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on the button, open the modal
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
 
 
 // add a delay 
