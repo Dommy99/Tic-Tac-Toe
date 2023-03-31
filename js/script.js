@@ -42,6 +42,13 @@ let playerOneWin = 0;
 let playerTwoWin = 0;
 let tie = 0;
 
+// adds Player1/2 or tie to the modal
+const statusModal = document.createElement("p");
+statusModal.classList.add("status");
+const modalContent = document.querySelector(".modal-content");
+modalContent.appendChild(statusModal);
+
+
 // Function to start a new game
 function newGame() {
   // Select all block elements and store them in a constant
@@ -104,10 +111,12 @@ function checkWin() {
     tie++;
     modal.style.display = "block";
     tieModal.textContent = `Tie:${tie}`;
+    statusModal.textContent = "It's a Tie!";
     setTimeout(function () {
       newGame();
     }, 2000);
   }
+  
 
   return false; // no winning combination or tie
 }
@@ -147,27 +156,28 @@ function handleClick(event) {
   // Check if there's a win and, if so, show an alert and start a new game
   if (checkWin()) {
     if (currentPlayer === 1) {
-        playerTwoIndicator.classList.add("player-two");
-        playerOneIndicator.classList.remove("player-one");
-        currentPlayer = 2;
+      playerTwoIndicator.classList.add("player-two");
+      playerOneIndicator.classList.remove("player-one");
+      currentPlayer = 2;
       playerTwoWin++;
       modal.style.display = "block";
       playerTwoWinModal.textContent = `Player 2 Win(s):${playerTwoWin}`;
-
+      statusModal.textContent = 'Player 2 Wins!'; 
     } else {
-        playerTwoIndicator.classList.remove("player-two");
-        playerOneIndicator.classList.add("player-one");
-        currentPlayer = 1;
+      playerTwoIndicator.classList.remove("player-two");
+      playerOneIndicator.classList.add("player-one");
+      currentPlayer = 1;
       playerOneWin++;
       modal.style.display = "block";
       playerOneWinModal.textContent = `Player 1 Win(s):${playerOneWin}`;
-
+      statusModal.textContent = 'Player 1 Wins!';
     }
-    // allows the final box to show the color before the new game starts
+  
     setTimeout(function () {
       newGame();
     }, 2000);
   }
+  
 }
 
 // Add click event listeners to each block
