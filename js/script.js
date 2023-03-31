@@ -9,6 +9,7 @@
 // board color
 // styles for x and o
 // styles for new game button
+//add google fonts
 
 // js
 //target the board and all 9 blocks
@@ -56,7 +57,8 @@ function newGame() {
   //resets the player color box
   playerTwoIndicator.classList.add("player-two");
   playerOneIndicator.classList.add("player-one");
-
+  //resets modal
+  statusModal.textContent = ''
   // Iterate over each block element
   blocks.forEach((block) => {
     // Clear the background color of each block
@@ -112,6 +114,7 @@ function checkWin() {
     modal.style.display = "block";
     tieModal.textContent = `Tie:${tie}`;
     statusModal.textContent = "It's a Tie!";
+    localStorage.setItem('tie',tie);
     setTimeout(function () {
       newGame();
     }, 2000);
@@ -163,6 +166,11 @@ function handleClick(event) {
       modal.style.display = "block";
       playerTwoWinModal.textContent = `Player 2 Win(s):${playerTwoWin}`;
       statusModal.textContent = 'Player 2 Wins!'; 
+
+      localStorage.setItem('currentplayer',currentPlayer);
+      localStorage.setItem('player2Wins',playerTwoWin);
+    //   const player2 = localStorage.getItem(playerTwoWin);
+      
     } else {
       playerTwoIndicator.classList.remove("player-two");
       playerOneIndicator.classList.add("player-one");
@@ -171,6 +179,9 @@ function handleClick(event) {
       modal.style.display = "block";
       playerOneWinModal.textContent = `Player 1 Win(s):${playerOneWin}`;
       statusModal.textContent = 'Player 1 Wins!';
+
+      localStorage.setItem('currentplayer',currentPlayer);
+      localStorage.setItem('player1Wins',playerOneWin);
     }
   
     setTimeout(function () {
