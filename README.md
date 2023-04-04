@@ -4,7 +4,7 @@
 ![CSS](https://img.shields.io/badge/CSS-%23146eb0?logo=css3&style=plastic)
 ![JAVASCRIPT](https://img.shields.io/badge/JavaScript-%23e9d44d?logo=javascript&style=plastic)
 
-## Table of Content
+## Table of Contents
 
 - [Description](#description)
 - [User-Story](#User-Story)
@@ -15,6 +15,7 @@
   - [Clone](#clone)
 - [Features](#Features)
    - [Hurdles](#Hurdles)
+- [Credits](#Credits)
 
 ## Description
 Got some free time? Enjoy a fun game of Tic Tac Toe.
@@ -66,3 +67,7 @@ git clone "add clone text here"
 - Localstorage integration and appending data.
 - Game logic (getting the game to recognize winning combinations).
 - CSS responsivness. 
+## Credits
+- Modal code [W3Schools](https://www.w3schools.com/howto/howto_css_modals.asp)
+- Shout out to [Jeff-Ou](https://github.com/pophero110) and [Kevin-Barrios](https://github.com/dayjyun) for help with bug fixes and code reviews.
+- Special thanks to Suresh Sigera for helping me manage the project time line 

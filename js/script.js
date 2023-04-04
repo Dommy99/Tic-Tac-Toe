@@ -17,7 +17,10 @@ const newGameButton = document.querySelector(".new-game-button");
 
 
 // Local storage data
-const storedPlayerOneWins = parseInt(localStorage.getItem("player1Wins")) || 0;
+/*these three lines of code retrieve the stored number of wins for Player 1, wins for Player 2, and ties 
+from localStorage. If any of these values are not present in localStorage, the corresponding constant is initialized to 0.
+I had trouble with the syntax and tried ".add" before just using .setItem in the checkWin()and handleClick() functions (for tie and win)*/
+const storedPlayerOneWins = parseInt(localStorage.getItem("player1Wins")) || 0;//or operation 0 if the value is not present.
 const storedPlayerTwoWins = parseInt(localStorage.getItem("player2Wins")) || 0;
 const storedTies = parseInt(localStorage.getItem("tie")) || 0;
 
@@ -81,6 +84,15 @@ function checkWin() {
   let clickedBlocks = 0;
 
   // Iterate over each winning combination
+  /*1.The for loop iterates through each possible winning combination
+    2.Destructuring assignment to extract the three indices(makes it possible to unpack values from arrays-MDN)
+    3.Checks if the current winning combination is present on the board by comparing the background colors of 
+    the blocks at positions a, b,c.
+    4.If block position a is filled and a is ==- to b and a is === to c wining combo
+    5.The loop will continue to iterate through all the possible winning combinations until it finds one 
+    that matches the current state of the board or until it has checked all the combinations. 
+    If no winning combination is found, the function will return false 
+    I struggled with the logic of the loop and how to check for a winning combination.*/
   for (const combination of winningCombinations) {
     // Extract (a, b, and c) from the current winning combination
     const [a, b, c] = combination;
@@ -119,6 +131,9 @@ function checkWin() {
 
 // Function to handle the click event on a block
 function handleClick(event) {
+  /*
+
+  */
   // Get the block element that was clicked
   const block = event.target;
 
